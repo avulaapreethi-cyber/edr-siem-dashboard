@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SEDR Dashboard</title>
+</head>
+<body style="background:#0b0f17;color:#00ffcc;font-family:monospace;">
+
+<h2>🛡️ EDR Dashboard</h2>
+
+<button onclick="loadLogs()">Load Logs</button>
+
+<pre id="logs"></pre>
+
+<script>
+async function loadLogs(){
+    const res = await fetch("/logs", {
+        headers: {
+            "Authorization": localStorage.getItem("token")
+        }
+    });
+
+    const data = await res.json();
+    document.getElementById("logs").innerText =
+        JSON.stringify(data, null, 2);
+}
+</script>
+
+</body>
+</html>

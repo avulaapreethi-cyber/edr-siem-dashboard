@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body style="background:black;color:white;text-align:center;">
+
+<h2>🔐 EDR Login</h2>
+
+<input id="user" placeholder="username"><br><br>
+<input id="pass" type="password" placeholder="password"><br><br>
+
+<button onclick="login()">Login</button>
+
+<script>
+async function login() {
+    let res = await fetch("/login", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({
+            username: document.getElementById("user").value,
+            password: document.getElementById("pass").value
+        })
+    });
+
+    let data = await res.json();
+
+    if(data.access_token){
+        localStorage.setItem("token", data.access_token);
+        window.location = "/dashboard";
+    } else {
+        alert("Login Failed");
+    }
+}
+</script>
+
+</body>
+</html>

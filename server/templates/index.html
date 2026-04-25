@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SOC Dashboard</title>
+
+<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+
+<style>
+body { background:black; color:white; font-family:Arial; }
+.alert { color:red; }
+</style>
+</head>
+
+<body>
+
+<h1> EDR Dashboard</h1>
+
+<p>Logs: <span id="logs">0</span></p>
+<p>Alerts: <span id="alerts">0</span></p>
+
+<ul id="alertBox"></ul>
+
+<script>
+const socket = io();
+
+let logs=0, alerts=0;
+
+socket.on("log", ()=>{
+    logs++;
+    document.getElementById("logs").innerText = logs;
+});
+
+socket.on("alert", (a)=>{
+    alerts++;
+    document.getElementById("alerts").innerText = alerts;
+
+    let li = document.createElement("li");
+    li.innerText = a.type + " - " + a.msg;
+    li.className="alert";
+
+    document.getElementById("alertBox").prepend(li);
+});
+</script>
+
+</body>
+</html>

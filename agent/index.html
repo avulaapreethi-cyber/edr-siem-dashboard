@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SIEM Dashboard</title>
+</head>
+<body style="background:#0b0f1a;color:#00ffcc">
+
+<h1>⚡ SIEM Dashboard</h1>
+
+<table border="1" width="100%">
+<thead>
+<tr>
+<th>Time</th>
+<th>IP</th>
+<th>Attack</th>
+</tr>
+</thead>
+
+<tbody id="logs"></tbody>
+</table>
+
+<script>
+async function loadData(){
+    const res = await fetch("/data");
+    const data = await res.json();
+
+    let html="";
+
+    data.forEach(log=>{
+        html+=`<tr>
+        <td>${log.timestamp}</td>
+        <td>${log.ip}</td>
+        <td>${log.attack}</td>
+        </tr>`;
+    });
+
+    document.getElementById("logs").innerHTML = html;
+}
+
+setInterval(loadData,2000);
+</script>
+
+</body>
+</html>
